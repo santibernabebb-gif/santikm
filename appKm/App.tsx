@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import * as XLSX from 'xlsx';
 import { RutaRecord, TabType, DIAS_LABORABLES, STORAGE_KEY } from './types';
 import { calculateDistance } from './services/geminiService';
@@ -166,63 +165,64 @@ const App: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-black tracking-tighter">SantiSystems-<span className="text-indigo-600">RutaKM</span></h1>
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Gestión de Kilometraje • Valencia</p>
+          <h1 className="text-3xl font-black tracking-tighter uppercase italic">SantiSystems-<span className="text-indigo-600">RutaKM</span></h1>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Gestión de Kilometraje Profesional</p>
         </header>
 
-        <nav className="flex bg-white p-1 rounded-[2rem] mb-8 shadow-sm border border-slate-100">
+        <nav className="flex bg-white p-1 rounded-2xl mb-8 shadow-sm border border-slate-100">
           <button 
             onClick={() => setPestaña('calc')} 
-            className={`flex-1 py-4 rounded-[1.8rem] font-black text-xs transition-all ${pestaña === 'calc' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
+            className={`flex-1 py-4 rounded-xl font-black text-[11px] uppercase tracking-wider transition-all ${pestaña === 'calc' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
           >
             NUEVA RUTA
           </button>
           <button 
             onClick={() => setPestaña('historial')} 
-            className={`flex-1 py-4 rounded-[1.8rem] font-black text-xs transition-all ${pestaña === 'historial' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
+            className={`flex-1 py-4 rounded-xl font-black text-[11px] uppercase tracking-wider transition-all ${pestaña === 'historial' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
           >
             HISTORIAL
           </button>
         </nav>
 
-        <main className="bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden min-h-[500px]">
+        <main className="bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden min-h-[500px]">
           {pestaña === 'calc' ? (
             <div className="p-8 space-y-6 animate-fade-in">
-              <div className="border-2 border-indigo-400 rounded-xl overflow-hidden shadow-sm bg-white">
+              <div className="bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-5">
+                <label className="text-[10px] font-black text-indigo-400 uppercase tracking-widest block mb-2">Concepto / Incidencia</label>
                 <input 
                   type="text" 
                   value={incidencia} 
                   onChange={e => setIncidencia(e.target.value)} 
-                  placeholder="incidencias" 
-                  className="w-full px-6 py-4 outline-none font-bold text-indigo-600 placeholder-indigo-300 text-2xl" 
+                  placeholder="Ej: Entrega urgente, Avería..." 
+                  className="w-full bg-transparent outline-none font-black text-indigo-800 placeholder-indigo-200 text-xl uppercase" 
                 />
               </div>
 
               <div className="space-y-4">
                 <div className="group">
-                  <label className="text-[9px] font-black text-slate-300 uppercase tracking-widest ml-4 mb-2 block group-focus-within:text-indigo-400 transition-colors">Origen</label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4 mb-2 block group-focus-within:text-indigo-600 transition-colors">Punto de Origen</label>
                   <input 
                     type="text" 
                     value={origen} 
                     onChange={e => setOrigen(e.target.value)} 
                     placeholder="Calle, Número o Lugar" 
-                    className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl px-6 py-4 outline-none font-bold text-slate-700 focus:border-indigo-400 focus:bg-white transition-all shadow-inner" 
+                    className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 outline-none font-black text-slate-900 focus:border-indigo-400 focus:bg-white transition-all shadow-inner uppercase" 
                   />
                 </div>
                 <div className="group">
-                  <label className="text-[9px] font-black text-slate-300 uppercase tracking-widest ml-4 mb-2 block group-focus-within:text-indigo-400 transition-colors">Destino</label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4 mb-2 block group-focus-within:text-indigo-600 transition-colors">Punto de Destino</label>
                   <input 
                     type="text" 
                     value={destino} 
                     onChange={e => setDestino(e.target.value)} 
                     placeholder="Calle, Número o Lugar" 
-                    className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl px-6 py-4 outline-none font-bold text-slate-700 focus:border-indigo-400 focus:bg-white transition-all shadow-inner" 
+                    className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 outline-none font-black text-slate-900 focus:border-indigo-400 focus:bg-white transition-all shadow-inner uppercase" 
                   />
                 </div>
               </div>
 
               {error && (
-                <div className="bg-rose-50 text-rose-600 p-4 rounded-2xl text-[10px] font-black text-center border border-rose-100">
+                <div className="bg-rose-50 text-rose-600 p-4 rounded-xl text-[11px] font-black text-center border-2 border-rose-100 uppercase tracking-tight">
                   {error}
                 </div>
               )}
@@ -230,17 +230,17 @@ const App: React.FC = () => {
               <button 
                 onClick={handleCalculateKm} 
                 disabled={cargando} 
-                className="w-full bg-slate-900 hover:bg-black disabled:bg-slate-200 text-white font-black py-5 rounded-[1.8rem] text-lg shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                className="w-full bg-slate-900 hover:bg-black disabled:bg-slate-200 text-white font-black py-5 rounded-2xl text-lg shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-3 uppercase tracking-tighter"
               >
                 {cargando ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : null}
-                {cargando ? 'PROCESANDO...' : 'REGISTRAR RUTA'}
+                {cargando ? 'CALCULANDO RUTA...' : 'REGISTRAR TRAYECTO'}
               </button>
 
               {distancia && (
-                <div className="bg-indigo-600 rounded-[2.5rem] p-10 text-center shadow-2xl shadow-indigo-100 animate-fade-in">
-                  <span className="text-[9px] font-black text-indigo-200 uppercase tracking-widest">Recorrido Estimado</span>
-                  <div className="text-7xl font-black text-white my-3 tracking-tighter">{distancia}</div>
-                  <div className="text-[10px] font-bold text-indigo-100 opacity-60">Ruta añadida al historial automáticamente</div>
+                <div className="bg-indigo-600 rounded-[2rem] p-10 text-center shadow-2xl shadow-indigo-100 animate-fade-in border-4 border-white">
+                  <span className="text-[10px] font-black text-indigo-200 uppercase tracking-[0.3em]">Distancia Total</span>
+                  <div className="text-7xl font-black text-white my-3 tracking-tighter italic">{distancia}</div>
+                  <div className="text-[11px] font-black text-indigo-100 opacity-80 uppercase">Guardado en Historial Semanal</div>
                 </div>
               )}
             </div>
@@ -250,15 +250,15 @@ const App: React.FC = () => {
                 <select 
                   value={semanaSeleccionada} 
                   onChange={e => setSemanaSeleccionada(e.target.value)} 
-                  className="w-full sm:w-auto bg-white border-2 border-slate-200 rounded-xl px-4 py-2 font-black text-slate-700 text-[10px] outline-none shadow-sm cursor-pointer"
+                  className="w-full sm:w-auto bg-white border-2 border-slate-200 rounded-xl px-4 py-2 font-black text-slate-800 text-[11px] outline-none shadow-sm cursor-pointer uppercase"
                 >
                   {listaSemanas.map(w => (
-                    <option key={w} value={w}>{w === currentMondayStr ? 'SEMANA ACTUAL' : getWeekRangeLabel(w)}</option>
+                    <option key={w} value={w}>{w === currentMondayStr ? 'ESTA SEMANA' : getWeekRangeLabel(w).toUpperCase()}</option>
                   ))}
                 </select>
                 <button 
                   onClick={descargarExcel} 
-                  className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-black text-[10px] hover:bg-indigo-700 shadow-md uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-black text-[11px] hover:bg-indigo-700 shadow-md uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   Exportar XLSX
@@ -269,46 +269,52 @@ const App: React.FC = () => {
                 {DIAS_LABORABLES.map(dia => {
                   const items = historial.filter(r => r.weekId === semanaSeleccionada && r.dia === dia);
                   return (
-                    <div key={dia} className="space-y-3">
+                    <div key={dia} className="space-y-4">
                       <div className="flex items-center gap-3">
-                        <div className={`h-6 w-6 rounded-lg flex items-center justify-center font-black text-[9px] ${items.length ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-300'}`}>
+                        <div className={`h-7 w-7 rounded-lg flex items-center justify-center font-black text-[10px] ${items.length ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 text-slate-300'}`}>
                           {dia[0]}
                         </div>
-                        <h3 className={`text-[10px] font-black uppercase tracking-widest ${items.length ? 'text-slate-800' : 'text-slate-200'}`}>
+                        <h3 className={`text-[11px] font-black uppercase tracking-[0.2em] ${items.length ? 'text-slate-900' : 'text-slate-200'}`}>
                           {dia}
                         </h3>
-                        <div className="h-px bg-slate-50 flex-1"></div>
+                        <div className="h-px bg-slate-100 flex-1"></div>
                       </div>
                       
-                      <div className="grid gap-3 pl-9">
+                      <div className="grid gap-4 pl-10">
                         {items.length === 0 ? (
-                          <div className="text-[9px] font-bold text-slate-200 uppercase italic py-2">Sin actividad registrada</div>
+                          <div className="text-[10px] font-black text-slate-200 uppercase italic py-2 tracking-widest">Sin registros este día</div>
                         ) : (
                           items.map(r => (
-                            <div key={r.id} className="bg-white border-2 border-slate-50 rounded-3xl p-5 flex items-center justify-between group hover:border-indigo-100 transition-all shadow-sm hover:shadow-lg relative overflow-hidden">
-                              <div className="min-w-0 flex-1">
-                                <div className="flex flex-wrap items-center gap-2 mb-2">
-                                  {r.incidencia && (
-                                    <span className="bg-indigo-600 text-white text-[11px] font-black px-2.5 py-1 rounded-lg uppercase tracking-tight shadow-sm">
-                                      {r.incidencia}
-                                    </span>
-                                  )}
-                                  <div className="text-[15px] font-black text-slate-900 truncate">{r.origen}</div>
+                            <div key={r.id} className="bg-white border-2 border-slate-100 rounded-[1.5rem] p-6 flex items-center justify-between group hover:border-indigo-600 transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                              <div className="min-w-0 flex-1 flex flex-col gap-3">
+                                {/* Fila 1: Incidencia */}
+                                <div className="text-[11px] font-black text-indigo-700 uppercase tracking-tight flex items-center gap-2">
+                                  <span className="opacity-40">INCIDENCIA:</span>
+                                  <span className="bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">{r.incidencia || 'S/N'}</span>
                                 </div>
-                                <div className="text-[11px] font-bold text-slate-400 truncate flex items-center gap-2 pl-1">
-                                  <svg className="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                                  {r.destino}
+                                
+                                {/* Fila 2: Origen */}
+                                <div className="text-[13px] font-black text-slate-900 uppercase leading-tight flex flex-col sm:flex-row sm:items-center gap-1">
+                                  <span className="text-[10px] text-slate-400 shrink-0">ORIGEN:</span>
+                                  <span className="truncate">{r.origen}</span>
+                                </div>
+                                
+                                {/* Fila 3: Destino */}
+                                <div className="text-[13px] font-black text-slate-700 uppercase leading-tight flex flex-col sm:flex-row sm:items-center gap-1">
+                                  <span className="text-[10px] text-slate-400 shrink-0">DESTINO:</span>
+                                  <span className="truncate">{r.destino}</span>
                                 </div>
                               </div>
-                              <div className="text-right flex items-center gap-5 ml-4">
-                                <div className="text-2xl font-black text-slate-900 tracking-tighter whitespace-nowrap">{r.distancia}</div>
+                              
+                              <div className="text-right flex items-center gap-6 ml-6">
+                                <div className="text-3xl font-black text-slate-900 tracking-tighter whitespace-nowrap italic">{r.distancia}</div>
                                 <button 
                                   onClick={() => borrarItem(r.id)} 
-                                  className="text-slate-200 hover:text-rose-500 transition-colors p-2 rounded-full hover:bg-rose-50"
-                                  title="Eliminar ruta"
+                                  className="text-slate-200 hover:text-rose-600 transition-all p-3 rounded-xl hover:bg-rose-50"
+                                  title="Borrar registro"
                                 >
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                   </svg>
                                 </button>
                               </div>
@@ -325,7 +331,7 @@ const App: React.FC = () => {
         </main>
 
         <footer className="mt-8 text-center">
-          <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.2em]">© 2025 SantiSystems Logistic Solutions</p>
+          <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">© 2025 SantiSystems Logistic Valencia</p>
         </footer>
 
       </div>
